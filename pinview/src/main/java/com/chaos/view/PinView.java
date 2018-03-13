@@ -71,6 +71,7 @@ public class PinView extends AppCompatEditText {
     private float mPinItemHeight;
     private int mPinItemRadius;
     private int mPinItemSpacing;
+    private int mTwinItemsSpacing;
 
     private final Paint mPaint;
     private final TextPaint mTextPaint;
@@ -131,6 +132,8 @@ public class PinView extends AppCompatEditText {
                 res.getDimensionPixelSize(R.dimen.pv_pin_view_item_size));
         mPinItemSpacing = a.getDimensionPixelSize(R.styleable.PinView_itemSpacing,
                 res.getDimensionPixelSize(R.dimen.pv_pin_view_item_spacing));
+        mTwinItemsSpacing = a.getDimensionPixelSize(R.styleable.PinView_twinItemsSpacing,
+                res.getDimensionPixelSize(R.dimen.pv_pin_view_twin_item_spacing));
         mPinItemRadius = a.getDimensionPixelSize(R.styleable.PinView_itemRadius, 0);
         mLineWidth = a.getDimensionPixelSize(R.styleable.PinView_lineWidth,
                 res.getDimensionPixelSize(R.dimen.pv_pin_view_item_line_width));
@@ -211,6 +214,9 @@ public class PinView extends AppCompatEditText {
             width = widthSize;
         } else {
             float boxesWidth = (mPinItemCount - 1) * mPinItemSpacing + mPinItemCount * mPinItemWidth;
+            if (mTwinItemsSpacing > 0) {
+                boxesWidth = boxesWidth + (mPinItemCount / 2) * mTwinItemsSpacing;
+            }
             width = Math.round(boxesWidth + ViewCompat.getPaddingEnd(this) + ViewCompat.getPaddingStart(this));
             if (mPinItemSpacing == 0) {
                 width -= (mPinItemCount - 1) * mLineWidth;
@@ -465,7 +471,7 @@ public class PinView extends AppCompatEditText {
 
     private void updateItemRectF(int i) {
         float halfLineWidth = (float) mLineWidth / 2;
-        float left = getScrollX() + ViewCompat.getPaddingStart(this) + i * (mPinItemSpacing + mPinItemWidth) + halfLineWidth;
+        float left = getScrollX() + ViewCompat.getPaddingStart(this) + i * (mPinItemSpacing + mPinItemWidth) + Math.round(i/2)* mTwinItemsSpacing + halfLineWidth;
         if (mPinItemSpacing == 0 && i > 0) {
             left = left - (mLineWidth) * i;
         }
