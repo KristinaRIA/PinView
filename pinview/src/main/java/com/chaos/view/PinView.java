@@ -215,7 +215,7 @@ public class PinView extends AppCompatEditText {
         } else {
             float boxesWidth = (mPinItemCount - 1) * mPinItemSpacing + mPinItemCount * mPinItemWidth;
             if (mTwinItemsSpacing > 0) {
-                boxesWidth = boxesWidth + (mPinItemCount / 2) * mTwinItemsSpacing;
+                boxesWidth = boxesWidth + (mPinItemCount / 2) * mTwinItemsSpacing - mTwinItemsSpacing;
             }
             width = Math.round(boxesWidth + ViewCompat.getPaddingEnd(this) + ViewCompat.getPaddingStart(this));
             if (mPinItemSpacing == 0) {
